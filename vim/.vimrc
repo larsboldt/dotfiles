@@ -40,7 +40,6 @@ nmap <C-L> <C-W><C-L>
 set hlsearch
 set incsearch
 
-"---------------Search----------------"
 let g:ctrlp_custom_ignore = 'node_modules\|git'
 
 "---------------Mappings--------------"
@@ -57,6 +56,10 @@ nmap <c-E> :CtrlPMRUFiles<cr>
 
 :imap jj <Esc>
 
+" Ctags
+nmap <Leader>f :tag<space>
+nmap <c-T> :!ctags -R --exclude=.git<cr>
+
 "---------------Commands-------------"
 
 " Automatically source the vimrc file on save
@@ -69,5 +72,5 @@ function! IPhpInsertUse()
     call PhpInsertUse()
     call feedkeys('a',  'n')
 endfunction
-autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
-autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
+autocmd FileType php inoremap <Leader>n <Esc>:call IPhpInsertUse()<CR>
+autocmd FileType php noremap <Leader>n :call PhpInsertUse()<CR>
