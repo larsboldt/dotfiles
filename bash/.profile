@@ -23,7 +23,6 @@ alias gfrf='git flow release finish'
 alias gfrp='git flow release publish'
 alias vup='vagrant up'
 alias vh='vagrant halt'
-alias unzip6='/usr/local/Cellar/unzip/6.0/bin/unzip'
 alias art='php artisan'
 alias test='vendor/bin/phpunit'
 
