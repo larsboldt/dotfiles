@@ -1,4 +1,4 @@
-alias ll='ls -la'
+alias ll='ls -laG'
 alias gc='git commit -m'
 alias ga='git add'
 alias gaa='git add .'
