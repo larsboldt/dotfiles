@@ -1,4 +1,4 @@
-alias dev='cd ~/devel && ll'
+alias dev='cd ~/devel && cll'
 alias cl='clear'
 alias cll='clear && ll'
 alias ll='ls -laG'
