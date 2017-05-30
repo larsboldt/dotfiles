@@ -1,3 +1,5 @@
+alias cl='clear'
+alias cll='clear && ll'
 alias ll='ls -laG'
 alias gc='git commit -m'
 alias ga='git add'
