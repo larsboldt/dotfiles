@@ -74,3 +74,5 @@ function! IPhpInsertUse()
 endfunction
 autocmd FileType php inoremap <Leader>n <Esc>:call IPhpInsertUse()<CR>
 autocmd FileType php noremap <Leader>n :call PhpInsertUse()<CR>
+
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
