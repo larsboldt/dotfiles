@@ -52,15 +52,13 @@ ZSH_THEME="agnoster"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  brew
-  composer
-  common-aliases
-	docker
 	git
-  git-extras
-  git-flow-avh
-  npm
-  vscode
+	copyfile
+	docker
+	docker-compose
+	git-flow-avh
+	vscode
+	web-search
 	zsh-autosuggestions
 )
 
@@ -69,7 +67,6 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
-
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
@@ -86,6 +83,8 @@ source $ZSH/oh-my-zsh.sh
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
+prompt_context() {}
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -96,12 +95,62 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 source ~/.aliases
 
-export GOPATH=$HOME/devel/go
-
-export PATH="$HOME/.composer/vendor/bin:$PATH"
-export PATH="/usr/local/opt/sqlite/bin:$PATH"
-export PATH="/usr/local/opt/python/libexec/bin:$PATH"
-export PATH="~/.local/bin:$PATH"
-
-alias opc-fj="$HOME/devel/oslo_kommune/vpn-osx/openconnect.sh connect uke195948 fjarb.oslo.kommune.no"
-alias opd="$HOME/devel/oslo_kommune/vpn-osx/openconnect.sh disconnect"
+composer () {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+	--volume /tmp:/tmp \
+        --volume $(pwd):/app \
+	--volume $SSH_AUTH_SOCK:/ssh-auth.sock \
+	--volume /etc/passwd:/etc/passwd:ro \
+    	--volume /etc/group:/etc/group:ro \
+	--user $(id -u):$(id -g) \
+	--env SSH_AUTH_SOCK=/ssh-auth.sock \
+        composer "$@"
+}
+php () {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+	--volume /tmp:/tmp \
+        --volume $(pwd):/app \
+	--volume $SSH_AUTH_SOCK:/ssh-auth.sock \
+	--volume /etc/passwd:/etc/passwd:ro \
+    	--volume /etc/group:/etc/group:ro \
+	--user $(id -u):$(id -g) \
+	--env SSH_AUTH_SOCK=/ssh-auth.sock \
+	-w /app \
+        php "$@"
+}
+npm () {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --volume $(pwd):/app \
+	--user $(id -u):$(id -g) \
+	--expose 9000 \
+	-p 9000:9000 \
+	-w /app \
+        node:alpine sh -c "npm ${@}"
+}
+webpack () {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --volume $(pwd):/app \
+	--user $(id -u):$(id -g) \
+	-w /app \
+        node:alpine sh -c "npx webpack $@"
+}

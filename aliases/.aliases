@@ -1,5 +1,6 @@
 alias dev='cd ~/devel && cll'
-alias ok='cd ~/devel/oslo_kommune && cll'
+alias ok='cd ~/devel/oslo_kommune && cll' 
+alias io='cd ~/devel/io-labs && cll'
 alias cl='clear'
 alias cll='clear && ll'
 alias ll='ls -laG'
