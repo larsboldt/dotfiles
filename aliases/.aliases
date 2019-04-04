@@ -1,5 +1,6 @@
 alias dev='cd ~/devel && cll'
 alias ok='cd ~/devel/oslo_kommune && cll' 
+alias io='cd ~/devel/io-labs && cll'
 alias cl='clear'
 alias cll='clear && ll'
 alias ll='ls -laG'
@@ -26,5 +27,3 @@ alias gfrs='git flow release start'
 alias gfrf='git flow release finish'
 alias gfrp='git flow release publish'
 alias art='php artisan'
-alias test='vendor/bin/phpunit'
-

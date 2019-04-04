@@ -51,14 +51,22 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git copyfile docker docker-compose git-flow-avh vscode web-search)
+plugins=(
+	git
+	copyfile
+	docker
+	docker-compose
+	git-flow-avh
+	vscode
+	web-search
+	zsh-autosuggestions
+)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
-
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
@@ -85,4 +93,64 @@ prompt_context() {}
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-source .aliases
+source ~/.aliases
+
+composer () {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+	--volume /tmp:/tmp \
+        --volume $(pwd):/app \
+	--volume $SSH_AUTH_SOCK:/ssh-auth.sock \
+	--volume /etc/passwd:/etc/passwd:ro \
+    	--volume /etc/group:/etc/group:ro \
+	--user $(id -u):$(id -g) \
+	--env SSH_AUTH_SOCK=/ssh-auth.sock \
+        composer "$@"
+}
+php () {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+	--volume /tmp:/tmp \
+        --volume $(pwd):/app \
+	--volume $SSH_AUTH_SOCK:/ssh-auth.sock \
+	--volume /etc/passwd:/etc/passwd:ro \
+    	--volume /etc/group:/etc/group:ro \
+	--user $(id -u):$(id -g) \
+	--env SSH_AUTH_SOCK=/ssh-auth.sock \
+	-w /app \
+        php "$@"
+}
+npm () {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --volume $(pwd):/app \
+	--user $(id -u):$(id -g) \
+	--expose 9000 \
+	-p 9000:9000 \
+	-w /app \
+        node:alpine sh -c "npm ${@}"
+}
+webpack () {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --volume $(pwd):/app \
+	--user $(id -u):$(id -g) \
+	-w /app \
+        node:alpine sh -c "npx webpack $@"
+}
