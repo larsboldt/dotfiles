@@ -1,4 +1,4 @@
-source .aliases
+source ~/.aliases
 
 # Git branch in prompt.
 parse_git_branch() {

@@ -7,7 +7,7 @@ export ZSH=/Users/larsboldt/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="agnoster"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -51,7 +51,18 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+  brew
+  composer
+  common-aliases
+	docker
+	git
+  git-extras
+  git-flow-avh
+  npm
+  vscode
+	zsh-autosuggestions
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -83,4 +94,14 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-source .aliases
+source ~/.aliases
+
+export GOPATH=$HOME/devel/go
+
+export PATH="$HOME/.composer/vendor/bin:$PATH"
+export PATH="/usr/local/opt/sqlite/bin:$PATH"
+export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+export PATH="~/.local/bin:$PATH"
+
+alias opc-fj="$HOME/devel/oslo_kommune/vpn-osx/openconnect.sh connect uke195948 fjarb.oslo.kommune.no"
+alias opd="$HOME/devel/oslo_kommune/vpn-osx/openconnect.sh disconnect"
